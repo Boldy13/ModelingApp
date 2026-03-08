@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Backend",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build backend",
+      "program": "${workspaceFolder}/Backend/bin/Debug/net9.0/Backend.dll",
+      "cwd": "${workspaceFolder}/Backend",
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "https://localhost:5001;http://localhost:5000"
+      },
+      "stopAtEntry": false
+    },
+    {
+      "name": "Frontend",
+      "type": "pwa-chrome",
+      "request": "launch",
+      "preLaunchTask": "start frontend",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/frontend/src"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "ModelingApp",
+      "configurations": [
+        "Backend",
+        "Frontend"
+      ],
+      "stopAll": true
+    }
+  ]
+}
