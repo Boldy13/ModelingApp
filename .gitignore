@@ -1,0 +1,16 @@
+# .NET build output
+Backend/bin/
+Backend/obj/
+
+# Frontend dependencies and build output
+frontend/node_modules/
+frontend/build/
+frontend/coverage/
+
+# Environment files
+.env
+.env.*
+
+# Editor and OS files
+.DS_Store
+Thumbs.db
