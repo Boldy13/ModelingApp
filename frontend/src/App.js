@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
-import { Canvas } from '@react-three/fiber';
-import { Grid, OrbitControls } from '@react-three/drei';
+import SceneViewport from './components/SceneViewport';
 
 const DEFAULT_SCENE_ID = 'default';
 
@@ -23,33 +22,6 @@ function createObject(type, index) {
 
 function clampScale(value) {
   return Math.max(0.1, Number(value) || 0);
-}
-
-function SceneObject({ object, isSelected, onSelect }) {
-  return (
-    <mesh
-      position={[object.position.x, object.position.y, object.position.z]}
-      rotation={[object.rotation.x, object.rotation.y, object.rotation.z]}
-      scale={[object.scale.x, object.scale.y, object.scale.z]}
-      onClick={(event) => {
-        event.stopPropagation();
-        onSelect(object.id);
-      }}
-      castShadow
-      receiveShadow
-    >
-      {object.type === 'sphere' ? (
-        <sphereGeometry args={[0.5, 32, 32]} />
-      ) : (
-        <boxGeometry args={[1, 1, 1]} />
-      )}
-      <meshStandardMaterial
-        color={object.color}
-        emissive={isSelected ? '#ffffff' : '#000000'}
-        emissiveIntensity={isSelected ? 0.2 : 0}
-      />
-    </mesh>
-  );
 }
 
 function NumberField({ label, value, onChange, step = '0.1', min }) {
@@ -238,31 +210,7 @@ function App() {
       </aside>
 
       <main className="viewport">
-        <Canvas camera={{ position: [5, 5, 8], fov: 50 }} shadows onPointerMissed={() => setSelectedId(null)}>
-          <color attach="background" args={['#f3efe5']} />
-          <ambientLight intensity={0.6} />
-          <directionalLight
-            castShadow
-            intensity={1.2}
-            position={[8, 10, 6]}
-            shadow-mapSize-width={1024}
-            shadow-mapSize-height={1024}
-          />
-          <Grid args={[30, 30]} cellColor="#b7ada1" sectionColor="#8f8576" fadeDistance={40} />
-          <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-            <planeGeometry args={[30, 30]} />
-            <shadowMaterial opacity={0.2} />
-          </mesh>
-          {objects.map((object) => (
-            <SceneObject
-              key={object.id}
-              object={object}
-              isSelected={object.id === selectedId}
-              onSelect={setSelectedId}
-            />
-          ))}
-          <OrbitControls makeDefault />
-        </Canvas>
+        <SceneViewport objects={objects} selectedId={selectedId} onSelect={setSelectedId} />
       </main>
 
       <aside className="panel panel-right">

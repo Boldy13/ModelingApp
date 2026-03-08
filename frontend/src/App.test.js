@@ -3,6 +3,7 @@ jest.mock('@react-three/fiber', () => ({
 }));
 
 jest.mock('@react-three/drei', () => ({
+  Environment: () => null,
   Grid: () => null,
   OrbitControls: () => null,
 }));
@@ -29,5 +30,6 @@ test('renders the scene editor shell', async () => {
 
   expect(screen.getByText(/scene editor/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /add cube/i })).toBeInTheDocument();
+  expect(screen.getByTestId('canvas')).toBeInTheDocument();
   expect(await screen.findByText(/loaded starter scene/i)).toBeInTheDocument();
 });
