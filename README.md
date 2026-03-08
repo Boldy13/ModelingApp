@@ -7,7 +7,7 @@ Backend development now targets the .NET 9 SDK.
 The current vertical slice supports:
 
 - loading a default scene from the backend
-- rendering simple 3D primitives in the browser
+- rendering simple 3D primitives through a dedicated Three.js viewport
 - selecting objects from the viewport or object list
 - editing position, rotation, scale, and color
 - saving the scene back to the backend
@@ -24,6 +24,7 @@ The current vertical slice supports:
 
 - React application created with Create React App
 - uses `three`, `@react-three/fiber`, and `@react-three/drei`
+- keeps editor state in `src/App.js` and scene rendering in `src/components/SceneViewport.js`
 - proxies API calls to `http://localhost:5000`
 
 ## Current Architecture
@@ -46,7 +47,17 @@ Each scene object contains:
 
 The frontend loads `/api/scenes/default`, renders the scene, and lets you edit and save it.
 
+The viewport is driven by React Three Fiber on top of Three.js and currently includes:
+
+- orbit camera controls
+- environment and directional lighting
+- ground grid, fog, and shadow plane
+- selected-object highlighting
+- axes helper for spatial orientation
+
 ## Running Locally
+
+Start the backend first, then the frontend.
 
 ### Backend
 
@@ -75,6 +86,10 @@ The frontend runs on:
 - `http://localhost:3000`
 
 Because `frontend/package.json` defines a proxy, API requests to `/api/...` are forwarded to the backend running on port `5000`.
+
+If both servers are running, open:
+
+- `http://localhost:3000`
 
 ## Useful Commands
 
@@ -135,3 +150,4 @@ Good next features for this project:
 - scene import/export
 - more primitive and material types
 - camera presets and viewport tools
+- richer material and environment controls
