@@ -2,6 +2,8 @@
 
 ModelingApp is an early-stage 3D scene editor built with a React frontend and an ASP.NET Core backend.
 
+Backend development now targets the .NET 9 SDK.
+
 The current vertical slice supports:
 
 - loading a default scene from the backend
